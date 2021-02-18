@@ -23,7 +23,7 @@ class Persona(models.Model):
   sexo = models.ForeignKey(Sexo, on_delete=models.CASCADE)
   direccion = models.CharField(max_length=60)
   telefono = models.CharField(max_length=10)
-  # usuario = models.CharField(max_length=30)
-  # password = models.CharField(max_length=250)
+  usuario = models.CharField(max_length=30)
+  password = models.CharField(max_length=250)
 
 

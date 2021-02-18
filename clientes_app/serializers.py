@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserModel
 from rest_framework import serializers
 from clientes_app.models import Persona, Sexo, TipoIdentificacion
 
@@ -8,7 +9,7 @@ class PersonaSerializer(serializers.ModelSerializer):
 
 class PersonaLeerSerializer(PersonaSerializer):
   tipoidentificacion = serializers.CharField(source = 'tipoidentificacion.nombre')
-  sexo = serializers.CharField(source = 'Sexos.nombre')
+  sexo = serializers.CharField(source = 'sexo.nombre')
 
 class SexoSerializer(serializers.ModelSerializer):
   class Meta:
@@ -18,4 +19,9 @@ class SexoSerializer(serializers.ModelSerializer):
 class TipoIdentificacionSerializer(serializers.ModelSerializer):
   class Meta:
     model = TipoIdentificacion
+    fields = '__all__'
+
+class UserSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = UserModel
     fields = '__all__'
