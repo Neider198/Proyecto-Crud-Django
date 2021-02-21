@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
 from clientes_app.models import Persona, Sexo, TipoIdentificacion
-from clientes_app.serializers import PersonaLeerSerializer, PersonaSerializer, SexoSerializer, TipoIdentificacionSerializer
+from clientes_app.serializers import PersonaLeerSerializer, PersonaSerializer, SexoSerializer, TipoIdentificacionSerializer, UserSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -16,8 +16,12 @@ from rest_framework.response import Response
 class CustomAuthToken(ObtainAuthToken):
 
   def post(self, request, *args, **kwargs):
-      serializer = self.serializer_class(data=request.data,
-                                          context={'request': request})
+      serializer = self.serializer_class(
+        data=request.data,
+        context={
+          'request': request
+        }
+      )
       serializer.is_valid(raise_exception=True)
       user = serializer.validated_data['user']
       token, created = Token.objects.get_or_create(user=user)
@@ -50,7 +54,7 @@ class CustomAuthToken(ObtainAuthToken):
 #   return Response(token.key)
 class PersonaLista (viewsets.ModelViewSet):
   queryset = Persona.objects.all()
-  # permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated]
 
   def get_serializer_class(self):
         # Define your HTTP method-to-serializer mapping freely.
@@ -68,13 +72,16 @@ class PersonaLista (viewsets.ModelViewSet):
 class SexoLista (viewsets.ModelViewSet):
   queryset = Sexo.objects.all()
   serializer_class = SexoSerializer
-  # permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated]
 
 class TipoIdentificacionLista (viewsets.ModelViewSet):
   queryset = TipoIdentificacion.objects.all()
   serializer_class = TipoIdentificacionSerializer
-  # permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated]
 
+class UserLista (viewsets.ModelViewSet):
+  queryset = User.objects.all()
+  serializer_class = UserSerializer
 
 
 

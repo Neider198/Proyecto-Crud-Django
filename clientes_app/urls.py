@@ -6,12 +6,13 @@ router = routers.DefaultRouter()
 router.register('persona', views.PersonaLista)
 router.register('sexo', views.SexoLista)
 router.register('tipo-identificacion', views.TipoIdentificacionLista)
+router.register('user', views.UserLista)
 
 
 # urlpatterns = router.urls
 # urlpatterns += path('loginn', views.loginn),
 urlpatterns = [
    path('', include(router.urls)),
-    path('api-token-auth/', views.CustomAuthToken.as_view()),
+   path('api-token-auth/', views.CustomAuthToken.as_view()),
    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
